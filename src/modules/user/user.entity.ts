@@ -14,21 +14,24 @@ export class User {
   email: string;
 
   @Column()
+  name: string;
+
+  @Column()
   password: string;
 
-  @Column()
+  @Column({ default: 'freelancer' })
   role: string;
 
-  @Column()
+  @Column({ nullable: true })
   profile_picture: string;
 
-  @Column()
+  @Column({ nullable: true })
   bio: string;
 
-  @Column()
+  @Column({ nullable: true })
   location: string;
 
-  @Column("text", { array: true })
+  @Column("text", { array: true, nullable: true })
   skills: string[];
 
   @Column({ type: "float", nullable: true })

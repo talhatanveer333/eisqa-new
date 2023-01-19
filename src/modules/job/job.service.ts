@@ -24,7 +24,12 @@ export class JobService {
   }
 
   async create(job: Job): Promise<Job> {
-    return await this.jobRepository.save(job);
+    try {
+      return await this.jobRepository.save(job);
+    }
+    catch (e) {
+      throw new HttpException(e.message, 400);
+    }
   }
 
   async update(id: number, job: Job): Promise<Job> {

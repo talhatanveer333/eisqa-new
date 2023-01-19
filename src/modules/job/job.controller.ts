@@ -1,7 +1,9 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from "@nestjs/common";
 import { Job } from "./job.entity";
 import { JobService } from "./job.service";
+import { AuthGuard } from '@nestjs/passport';
 
+@UseGuards(AuthGuard('jwt'))
 @Controller('jobs')
 export class JobController {
     constructor(private readonly jobService: JobService) { }

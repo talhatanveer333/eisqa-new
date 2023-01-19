@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Delete, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Body, Param, UseGuards } from '@nestjs/common';
 import { UsersService } from './user.service';
 import { User } from './user.entity';
 import { JobService } from '../job/job.service';
@@ -7,7 +7,9 @@ import { ProposalService } from '../proposal/proposal.service';
 import { Proposal } from '../proposal/proposal.entity';
 import { JobReviewService } from '../job_review/job_review.service';
 import { JobReview } from '../job_review/job_review.entity';
+import { AuthGuard } from '@nestjs/passport';
 
+@UseGuards(AuthGuard('jwt'))
 @Controller('users')
 export class UserController {
     constructor(private readonly userService: UsersService) { }
@@ -22,14 +24,9 @@ export class UserController {
         return this.userService.findOne(email);
     }
 
-    @Post()
-    async create(@Body() user: User): Promise<User> {
-        return this.userService.create(user);
-    }
-
-    @Put(':id')
-    async update(@Param('id') id: number, @Body() user: User): Promise<User> {
-        return this.userService.update(id, user);
+    @Put(':email')
+    async update(@Param('email') email: string, @Body() user: User): Promise<User> {
+        return this.userService.update(email, user);
     }
 
     @Delete(':id')

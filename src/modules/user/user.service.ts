@@ -9,6 +9,7 @@ import { RegisterPayload } from 'modules/auth';
 import { Repository } from 'typeorm';
 import { ResponseCode, ResponseMessage } from '../../utils/enum';
 import { User } from './user.entity';
+import * as bcrypt from 'bcrypt';
 
 
 @Injectable()
@@ -23,16 +24,17 @@ export class UsersService {
   }
 
   async findOne(email: string): Promise<User> {
-    return await this.userRepository.findOne(email);
+    return await this.userRepository.findOne({ email });
   }
 
   async create(user: User): Promise<User> {
+    user.password = await Hash.make(user.password);
     return await this.userRepository.save(user);
   }
 
-  async update(id: number, user: User): Promise<User> {
-    await this.userRepository.update(id, user);
-    return await this.userRepository.findOne(id);
+  async update(email: string, user: User): Promise<User> {
+    await this.userRepository.update({ email }, user);
+    return await this.userRepository.findOne({ email });
   }
 
   async remove(id: number): Promise<void> {

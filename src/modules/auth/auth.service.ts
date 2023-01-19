@@ -42,10 +42,14 @@ export class AuthService {
    * @param payload
    * @returns
    */
-  public async register(payload: User): Promise<User> {
+  public async register(payload: RegisterPayload): Promise<User> {
+    let newUser = new User();
+    newUser.email = payload.email;
+    newUser.password = payload.password;
+    newUser.name = payload.name;
     return new Promise<User>(async (resolve, reject) => {
       await this.userService
-        .create(payload)
+        .create(newUser)
         .then(async (user: User) => {
           await this.createToken(user);
           return resolve(user);

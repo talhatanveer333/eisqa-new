@@ -32,7 +32,7 @@
     "@nestjs/platform-express": "^8.4.1",
     "@nestjs/typeorm": "^8.0.3",
     "authenticator": "^1.1.5",
-    "bcrypt": "^5.0.1",
+    "bcrypt": "^5.1.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
     "country-state-city": "^3.0.1",
