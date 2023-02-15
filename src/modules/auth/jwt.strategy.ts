@@ -12,18 +12,20 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate({ iat, exp, email }: JwtPayload, done) {
-    const timeDiff = exp - iat;
-    if (timeDiff <= 0) {
-      throw new UnauthorizedException();
-    }
+  async validate(jwt: JwtPayload, done) {
+    console.log({ jwt })
+    // const timeDiff = exp - iat;
+    // console.log({ timeDiff })
+    // if (timeDiff <= 0) {
+    //   throw new UnauthorizedException();
+    // }
 
-    const user = await this.usersService.findOne(email);
-    if (!user) {
-      throw new UnauthorizedException();
-    }
+    // const user = await this.usersService.findOne(email);
+    // if (!user) {
+    //   throw new UnauthorizedException();
+    // }
 
-    delete user.password;
-    done(null, user);
+    // delete user.password;
+    // done(null, user);
   }
 }
